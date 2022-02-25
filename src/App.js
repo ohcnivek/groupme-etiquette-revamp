@@ -1,5 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
+import {getInitAPIRes} from './logic'
+
+
+
+
+
+getInitAPIRes()
+
 
 function App() {
   return (
