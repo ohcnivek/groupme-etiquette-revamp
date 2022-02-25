@@ -4,8 +4,6 @@ import {getInitAPIRes} from './logic'
 
 
 
-
-
 getInitAPIRes()
 
 
