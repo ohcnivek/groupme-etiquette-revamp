@@ -49,11 +49,11 @@ async function getGroupMessageCountAndMessages(group, params) {
     
 }
 
-async function analyzeMessages() {
+async function analyzeMessages(group) {
     // TODO: Helper Method
-    let res  = await fetchGroups();
-    let groupList = res.data['response']
-    let group = groupList[0]; // this is gonna be the chosen group that is passed in later, rn just chooses the most recently messaged in chat
+    // let res  = await fetchGroups();
+    // let groupList = res.data['response']
+    // let group = groupList[0]; // this is gonna be the chosen group that is passed in later, rn just chooses the most recently messaged in chat
     let members = group['members']
 
     let params = {
@@ -85,8 +85,7 @@ async function analyzeMessages() {
             messages = response['messages']
         } catch (e) {
             ranOutOfMessages = !ranOutOfMessages;
-            console.log("Exiting loop")
-            break;
+
         }
         
 
@@ -126,7 +125,7 @@ async function analyzeMessages() {
                 currStateOfLiker['likes_given'] = currStateOfLiker['likes_given'] + 1
                 user_map.set(liker_id, currStateOfLiker); // done with udpates to liker
             }
-            currStateOfSender['likes_received'] = likes_received;
+            currStateOfSender['likes_received'] = currStateOfSender['likes_received'] + likes_received;
             user_map.set(sender_id, currStateOfSender); // done with updates to messages sender
         }
         // console.log(messages[messages.length - 1])
@@ -137,8 +136,8 @@ async function analyzeMessages() {
 }
 
 
-async function main() {
-    let response = await analyzeMessages() 
+async function main(group) {
+    let response = await analyzeMessages(group) 
     return response;
 }
 

@@ -44,12 +44,12 @@ function GroupScreen(props) {
             <h1>Group Screen </h1>
 
             {groups.map( (group, index) => {
-                return  <li> {index}. {group.name}</li>
+                return <Button onClick={() => navigate('/GroupScreen/RankingScreen', {state: {groupObject: group}})}> {index}. {group.name} </Button>
             }
 
             )}
 
-            <Button onClick={() => navigate('/GroupScreen/RankingScreen')}>Go to Ranking Screen</Button>
+            {/* <Button onClick={() => navigate('/GroupScreen/RankingScreen')}>Go to Ranking Screen</Button> */}
         </div>
         
     );
