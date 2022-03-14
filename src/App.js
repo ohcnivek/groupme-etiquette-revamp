@@ -1,11 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import {getInitAPIRes} from './logic'
+import {fetchGroups, listGroups, getGroupMessageCountAndMessages, analyzeMessages} from './logic'
 
+listGroups()
 
-
-getInitAPIRes()
-
+// getGroupMessageCountAndMessages()
+analyzeMessages()
 
 function App() {
   return (
