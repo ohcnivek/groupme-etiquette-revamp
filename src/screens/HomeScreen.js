@@ -19,7 +19,6 @@ function HomeScreen(props) {
         setAPIKey(data['userAPIKey']);
         navigate('/GroupScreen', {state: {apiKey: data['userAPIKey']}})
     };
-    console.log(INPUT_API_KEY);
     
     return (
         <div>
@@ -34,13 +33,10 @@ function HomeScreen(props) {
             <h5>Follow these simple steps: </h5> 
 
             <header className="App-mid">
-
-            <h5>1. Login with your GroupMe credentials at this <a href="https://dev.groupme.com/session/new">link</a> </h5>
-            <h5>2. After verifying your identity etc, click the button labeled "Access Token" on the top right corner next to your name</h5>
-            <h5>3. Copy that access token, and paste it into the box below! </h5>
-
+                <h5>1. Login with your GroupMe credentials at this <a href="https://dev.groupme.com/session/new">link</a> </h5>
+                <h5>2. After verifying your identity etc, click the button labeled "Access Token" on the top right corner next to your name</h5>
+                <h5>3. Copy that access token, and paste it into the box below! </h5>
             </header>
-
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Controller
@@ -51,10 +47,6 @@ function HomeScreen(props) {
                 />
                 <input type="submit" />
             </form>
-
-
-
-
 
             <h5>built with love, react + vercel, </h5>
             <h5> - kevin c. </h5>

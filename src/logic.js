@@ -2,7 +2,6 @@ import axios from "axios";
 
 
 async function fetchGroups(userAPIKey) {
-    // userAPIKey = ACCESS_TOKEN
     let response = await axios.get('https://api.groupme.com/v3/groups?token=' + userAPIKey);
     return response
 }
@@ -10,11 +9,6 @@ async function fetchGroups(userAPIKey) {
 async function listGroups(userAPIKey) {
     let res  = await fetchGroups(userAPIKey);
     let groupList = res.data['response']
-    // console.log(groupList)
-    // console.log("Choose your group!")
-    // for (let i = 0; i < groupList.length; i++) {
-    //     console.log(`${i}. ` + groupList[i].name);
-    // }
     return groupList;
 }
 
@@ -32,7 +26,6 @@ function prepare_user_dictionary(members) {
 }
 
 async function getGroupMessageCountAndMessages(group, params, userAPIKey) {
-    // GET ALL MEMEBERS AND PREP DICTIONARY 
     let messageCount;
     let messages;
 
@@ -48,13 +41,8 @@ async function getGroupMessageCountAndMessages(group, params, userAPIKey) {
     
 }
 
-async function analyzeMessages(group, userAPIKey) {
-    // TODO: Helper Method
-    // let res  = await fetchGroups();
-    // let groupList = res.data['response']
-    // let group = groupList[0]; // this is gonna be the chosen group that is passed in later, rn just chooses the most recently messaged in chat
+async function getUserMap(group, userAPIKey) {
     let members = group['members']
-
     let params = {
         params: {
           limit: 100, 
@@ -64,10 +52,6 @@ async function analyzeMessages(group, userAPIKey) {
     let user_map = prepare_user_dictionary(members);
     let response = await getGroupMessageCountAndMessages(group, params, userAPIKey);
     let messages = response['messages']
-
-    // console.log(JSON.stringify(messageCount, null, 4))
-    // console.log(JSON.stringify(messages, null, 4))
-
     let last_messageID; 
     let ranOutOfMessages = false ;
 
@@ -84,23 +68,16 @@ async function analyzeMessages(group, userAPIKey) {
 
         }
         
-
         for (let i = 0; i < messages.length; i++) {
-
             let message = messages[i]; 
-            // console.log(message)
-
             if (message['name'] === "GroupMe") {
                 continue;
             }
-        //     // DO UPDATES HERE
-        //     // TO UPDATE {'name': name, 'messages_sent': 0, 'likes_given': 0, 'likes_received': 0, 'words_sent': 0, 'likes_by_member': {}, 'shared_likes': {}, 'self_likes': 0}
+        //  State of senders in user map{'name': name, 'messages_sent': 0, 'likes_given': 0, 'likes_received': 0, 'words_sent': 0, 'likes_by_member': {}, 'shared_likes': {}, 'self_likes': 0}
             let sender_id = message['sender_id']
             let likers = message['favorited_by']
 
             let currStateOfSender = user_map.get(sender_id);
-            console.log(currStateOfSender)
-
             if (!currStateOfSender) {
                 continue;
             }
@@ -127,7 +104,6 @@ async function analyzeMessages(group, userAPIKey) {
             currStateOfSender['likes_received'] = currStateOfSender['likes_received'] + likes_received;
             user_map.set(sender_id, currStateOfSender); // done with updates to messages sender
         }
-        // console.log(messages[messages.length - 1])
         last_messageID = messages[messages.length - 1]['id'];
     }
 
@@ -136,8 +112,7 @@ async function analyzeMessages(group, userAPIKey) {
 
 
 async function getRankings(group, userAPIKey) {
-    let response = await analyzeMessages(group, userAPIKey) 
-
+    let response = await getUserMap(group, userAPIKey) 
     let ranking = [];
 
     for (let [key, value] of  response.entries()) {
@@ -147,12 +122,10 @@ async function getRankings(group, userAPIKey) {
         }
     }
 
-    ranking.sort(sortFunction)
-    console.log(ranking)
+    ranking.sort(sortFunction) // will sort so that the greatest is in the front 
 
     //top 10
     let portion = Math.round(ranking.length * .15)
-
     let topRanks = []
     for (let i = 0; i < portion; i++) {
         if (i < ranking.length) {
@@ -162,9 +135,7 @@ async function getRankings(group, userAPIKey) {
         }
     }
 
-    // ranking.length * .1 
     //bottom 10
-
     let bottomRanks = []
     for (let i = ranking.length - 1; i > ranking.length - 1 - portion; i--) {
         if (i >= 0) { // avoiding out of bounds
@@ -174,9 +145,7 @@ async function getRankings(group, userAPIKey) {
         }
     }
 
-
     let topANDbottomRes = [topRanks, bottomRanks]
-
     return topANDbottomRes;
 }
 
@@ -192,4 +161,4 @@ function sortFunction(a, b) {
 
 
 
-export {fetchGroups, listGroups, getGroupMessageCountAndMessages, analyzeMessages, getRankings as main};
+export {fetchGroups, listGroups, getGroupMessageCountAndMessages, getUserMap, getRankings as main};

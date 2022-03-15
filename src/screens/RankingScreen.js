@@ -2,19 +2,12 @@ import React, { useState, useEffect} from "react";
 import { useLocation } from "react-router-dom";
 import {main} from "../logic"
 
-
-
 function RankingScreen(props) {
     const location = useLocation();
-
     let [topANDbottomRanking, settopANDbottomRanking] = useState([[[]], [[]]]);
-
     const group = location.state.groupObject
 
-    
-
     useEffect(()=> {
-
         async function getRankings() {
             return await main(group, location.state.userApiKey).then(
                 res => {
@@ -37,9 +30,7 @@ function RankingScreen(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [[[]], [[]]])
 
-    console.log(topANDbottomRanking)
-    console.log("in ranking screen")
-    
+   
     return (
         <div>
                 <h1>Rankings (based on messages sent to likes recieved) </h1>

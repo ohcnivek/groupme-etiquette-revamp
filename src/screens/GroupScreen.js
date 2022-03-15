@@ -3,15 +3,11 @@ import {Button} from "@mui/material/"
 import { useNavigate, useLocation } from "react-router-dom";
 import { listGroups } from "../logic";
 
-
-
 function GroupScreen(props) {
     let navigate = useNavigate();
     const location = useLocation();
 
     let [groups, setGroups] = useState([]);
-
-    console.log("in group screen")
     const INPUT_API_KEY = location.state.apiKey
 
     useEffect(()=> {
@@ -45,13 +41,12 @@ function GroupScreen(props) {
             <h1> Chooose the group to analyze! </h1>
             <h5> (for right now the more the messages in the gc, the better) </h5>
 
-            {groups.map( (group, index) => {
-                return <Button onClick={() => navigate('/GroupScreen/RankingScreen', {state: {groupObject: group, userApiKey: location.state.apiKey}})}> {index}. {group.name} </Button>
+            {groups.map(
+                (group, index) => {
+                    return <Button onClick={() => navigate('/GroupScreen/RankingScreen', {state: {groupObject: group, userApiKey: location.state.apiKey}})}> {index}. {group.name} </Button>
+            })
             }
 
-            )}
-
-            {/* <Button onClick={() => navigate('/GroupScreen/RankingScreen')}>Go to Ranking Screen</Button> */}
         </div>
         
     );

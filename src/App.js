@@ -1,18 +1,13 @@
 import './App.css';
 import HomeScreen from "./screens/HomeScreen"
 import GroupScreen from './screens/GroupScreen';
+import RankingScreen from './screens/RankingScreen';
 
 import {
   BrowserRouter,
   Routes, //replaces "Switch" used till v5
   Route,
 } from "react-router-dom";
-import RankingScreen from './screens/RankingScreen';
-
-
-// listGroups()
-// getGroupMessageCountAndMessages()
-// console.log(main())
 
 
 function App() {
