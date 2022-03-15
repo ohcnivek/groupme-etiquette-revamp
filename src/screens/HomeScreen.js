@@ -22,14 +22,22 @@ function HomeScreen(props) {
     console.log(INPUT_API_KEY);
     
     return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-        name="userAPIKey"
-        control={control}
-        render={({ field }) => <Input {...field} />}
-        />
-        <input type="submit" />
-    </form>
+        <div>
+            <h1>who has the worst groupme etiquette amongst ur friends? </h1>
+            <h5>to find out, get your groupme api developer token from this link, and submit in the box below! </h5>
+            <h5>also no, i dont keep track of tokens that are entered so dont worry :D</h5>
+
+
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <Controller
+                name="userAPIKey"
+                control={control}
+                render={({ field }) => <Input {...field} />}
+                />
+                <input type="submit" />
+            </form>
+        </div>
+    
     );
   }
 

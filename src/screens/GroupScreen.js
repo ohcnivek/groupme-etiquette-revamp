@@ -41,7 +41,8 @@ function GroupScreen(props) {
     
     return (
         <div>
-            <h1>Group Screen </h1>
+            <h1> Chooose the group to analyze! </h1>
+            <h5> (for right now the more the messages in the gc, the better) </h5>
 
             {groups.map( (group, index) => {
                 return <Button onClick={() => navigate('/GroupScreen/RankingScreen', {state: {groupObject: group}})}> {index}. {group.name} </Button>

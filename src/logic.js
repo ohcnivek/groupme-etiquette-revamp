@@ -136,11 +136,62 @@ async function analyzeMessages(group) {
 }
 
 
-async function main(group) {
+async function getRankings(group) {
     let response = await analyzeMessages(group) 
-    return response;
+
+    let ranking = [];
+
+    for (let [key, value] of  response.entries()) {
+        if (value['messages_sent'] > 0) {
+            const userToRatio = [ value['likes_received'] * 1.0 / value['messages_sent'] * 1.0, value['name']]
+            ranking.push(userToRatio)
+        }
+        // console.log(key + " = " + value)
+    }
+
+    ranking.sort(sortFunction)
+    console.log(ranking)
+
+    //top 10
+    let portion = Math.round(ranking.length * .15)
+
+    let topRanks = []
+    for (let i = 0; i < portion; i++) {
+        if (i < ranking.length) {
+            topRanks.push(ranking[i])
+        } else {
+            break;
+        }
+    }
+
+    // ranking.length * .1 
+    //bottom 10
+
+    let bottomRanks = []
+    for (let i = ranking.length - 1; i > ranking.length - 1 - portion; i--) {
+        if (i >= 0) { // avoiding out of bounds
+            bottomRanks.push(ranking[i])
+        } else {
+            break;
+        }
+    }
+
+
+    let topANDbottomRes = [topRanks, bottomRanks]
+
+    return topANDbottomRes;
+}
+
+
+function sortFunction(a, b) {
+    if (a[0] === b[0]) {
+        return 0;
+    }
+    else {
+        return (a[0] > b[0]) ? -1 : 1;
+    }
 }
 
 
 
-export {fetchGroups, listGroups, getGroupMessageCountAndMessages, analyzeMessages, main};
+export {fetchGroups, listGroups, getGroupMessageCountAndMessages, analyzeMessages, getRankings as main};

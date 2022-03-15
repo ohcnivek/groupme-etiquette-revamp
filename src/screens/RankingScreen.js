@@ -9,42 +9,51 @@ import {main} from "../logic"
 function RankingScreen(props) {
     const location = useLocation();
 
-    let [userMap, setUserMap] = useState({});
+    let [topANDbottomRanking, settopANDbottomRanking] = useState([[[]], [[]]]);
 
     const group = location.state.groupObject
 
-    async function getUserMap() {
+    async function getRankings() {
         return await main(group).then(
             res => {
-                setUserMap(res)
+                settopANDbottomRanking(res)
             }
         )
     }
 
     useEffect(()=> {
-        async function fetchUserMap() {
+        async function fetchRankings() {
             try {
-                getUserMap();
+                getRankings();
             } catch (err) {
               console.log('err-');
               console.error(err);
             }
         }
 
-        fetchUserMap()
-    }, [])
+        fetchRankings()
+    }, [[[]], [[]]])
 
-    console.log(userMap)
-
-    
-
-    console.log(group)
-
-    
+    console.log(topANDbottomRanking)
     console.log("in ranking screen")
     
     return (
-        <h1>Ranking Screen </h1>
+        <div>
+                <h1>Rankings (based on messages sent to likes recieved) </h1>
+
+                <h2>winners: top 15% of those who sent messages </h2>
+                {topANDbottomRanking[0].map((pair, index) => { 
+                                return <h3> {index + 1}. {pair[1]} : ratio of {Math.round(pair[0] * 100) / 100} </h3>
+                            })
+                            }
+
+                <h2>not winners: bottom 15% of those who sent messages</h2>
+                {topANDbottomRanking[1].map((pair, index) => { 
+                                return <h3> {index + 1}. {pair[1]} : ratio of {Math.round(pair[0] * 100) / 100} </h3>
+                            })
+                            }
+                        
+        </div>
     );
   }
 
