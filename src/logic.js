@@ -99,6 +99,11 @@ async function analyzeMessages(group, userAPIKey) {
             let likers = message['favorited_by']
 
             let currStateOfSender = user_map.get(sender_id);
+            console.log(currStateOfSender)
+
+            if (!currStateOfSender) {
+                continue;
+            }
             currStateOfSender['messages_sent'] = currStateOfSender['messages_sent'] + 1;
 
             let likes_received = likers.length;
