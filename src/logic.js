@@ -1,4 +1,3 @@
-import {ACCESS_TOKEN} from "./data"
 import axios from "axios";
 
 
