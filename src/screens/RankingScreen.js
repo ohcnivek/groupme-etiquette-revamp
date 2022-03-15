@@ -1,7 +1,5 @@
 import React, { useState, useEffect} from "react";
-import { useForm, Controller } from "react-hook-form";
-import {TextField, Button, Input} from "@mui/material/"
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {main} from "../logic"
 
 
@@ -13,15 +11,18 @@ function RankingScreen(props) {
 
     const group = location.state.groupObject
 
-    async function getRankings() {
-        return await main(group, location.state.userApiKey).then(
-            res => {
-                settopANDbottomRanking(res)
-            }
-        )
-    }
+    
 
     useEffect(()=> {
+
+        async function getRankings() {
+            return await main(group, location.state.userApiKey).then(
+                res => {
+                    settopANDbottomRanking(res)
+                }
+            )
+        }
+
         async function fetchRankings() {
             try {
                 getRankings();
@@ -32,6 +33,8 @@ function RankingScreen(props) {
         }
 
         fetchRankings()
+        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [[[]], [[]]])
 
     console.log(topANDbottomRanking)

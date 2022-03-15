@@ -43,7 +43,7 @@ async function getGroupMessageCountAndMessages(group, params, userAPIKey) {
     
         return {'messages': messages, 'messageCount': messageCount }
     } catch (e) {
-        throw 'done'
+        throw new Error("done getting messages")
     }
     
 }
@@ -64,17 +64,14 @@ async function analyzeMessages(group, userAPIKey) {
     let user_map = prepare_user_dictionary(members);
     let response = await getGroupMessageCountAndMessages(group, params, userAPIKey);
     let messages = response['messages']
-    let messageCount = response['messageCount']
 
     // console.log(JSON.stringify(messageCount, null, 4))
     // console.log(JSON.stringify(messages, null, 4))
 
-    let messagesAnalyzed = 0;
     let last_messageID; 
     let ranOutOfMessages = false ;
 
     while (!ranOutOfMessages) {
-        // console.log("messages analyzed: " + messagesAnalyzed +  " messages left: " + messageCount - messagesAnalyzed )
         if (last_messageID) {
             console.log("last message not null")
             params['params']['before_id'] = last_messageID; // Broken, need to figure out last ID thing
@@ -89,9 +86,7 @@ async function analyzeMessages(group, userAPIKey) {
         
 
         for (let i = 0; i < messages.length; i++) {
-            // console.log("analyzing " + i + "th message")
-        //     // console.log("messages analyzed: " + messagesAnalyzed +  " messages left: " + messageCount - messagesAnalyzed )`
-        //     messagesAnalyzed++;
+
             let message = messages[i]; 
             // console.log(message)
 
@@ -145,7 +140,6 @@ async function getRankings(group, userAPIKey) {
             const userToRatio = [ value['likes_received'] * 1.0 / value['messages_sent'] * 1.0, value['name']]
             ranking.push(userToRatio)
         }
-        // console.log(key + " = " + value)
     }
 
     ranking.sort(sortFunction)

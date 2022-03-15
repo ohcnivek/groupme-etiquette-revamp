@@ -1,5 +1,4 @@
 import './App.css';
-import {fetchGroups, listGroups, getGroupMessageCountAndMessages, analyzeMessages, main} from './logic'
 import HomeScreen from "./screens/HomeScreen"
 import GroupScreen from './screens/GroupScreen';
 
