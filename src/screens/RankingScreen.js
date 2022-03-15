@@ -14,7 +14,7 @@ function RankingScreen(props) {
     const group = location.state.groupObject
 
     async function getRankings() {
-        return await main(group).then(
+        return await main(group, location.state.userApiKey).then(
             res => {
                 settopANDbottomRanking(res)
             }

@@ -32,13 +32,13 @@ function prepare_user_dictionary(members) {
     return user_map
 }
 
-async function getGroupMessageCountAndMessages(group, params) {
+async function getGroupMessageCountAndMessages(group, params, userAPIKey) {
     // GET ALL MEMEBERS AND PREP DICTIONARY 
     let messageCount;
     let messages;
 
     try {
-        let group_response  =  await axios.get("https://api.groupme.com/v3/groups/"+ group['id'] +"/messages?token=" + ACCESS_TOKEN, params); 
+        let group_response  =  await axios.get("https://api.groupme.com/v3/groups/"+ group['id'] +"/messages?token=" + userAPIKey, params); 
         messageCount = await group_response['data']['response']['count'];
         messages = await group_response['data']['response']['messages'];
     
@@ -49,7 +49,7 @@ async function getGroupMessageCountAndMessages(group, params) {
     
 }
 
-async function analyzeMessages(group) {
+async function analyzeMessages(group, userAPIKey) {
     // TODO: Helper Method
     // let res  = await fetchGroups();
     // let groupList = res.data['response']
@@ -63,7 +63,7 @@ async function analyzeMessages(group) {
       }
 
     let user_map = prepare_user_dictionary(members);
-    let response = await getGroupMessageCountAndMessages(group, params);
+    let response = await getGroupMessageCountAndMessages(group, params, userAPIKey);
     let messages = response['messages']
     let messageCount = response['messageCount']
 
@@ -81,7 +81,7 @@ async function analyzeMessages(group) {
             params['params']['before_id'] = last_messageID; // Broken, need to figure out last ID thing
         } 
         try {
-            response = await getGroupMessageCountAndMessages(group, params);
+            response = await getGroupMessageCountAndMessages(group, params, userAPIKey);
             messages = response['messages']
         } catch (e) {
             ranOutOfMessages = !ranOutOfMessages;
@@ -136,8 +136,8 @@ async function analyzeMessages(group) {
 }
 
 
-async function getRankings(group) {
-    let response = await analyzeMessages(group) 
+async function getRankings(group, userAPIKey) {
+    let response = await analyzeMessages(group, userAPIKey) 
 
     let ranking = [];
 
