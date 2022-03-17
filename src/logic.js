@@ -57,7 +57,6 @@ async function getUserMap(group, userAPIKey) {
 
     while (!ranOutOfMessages) {
         if (last_messageID) {
-            console.log("last message not null")
             params['params']['before_id'] = last_messageID; // Broken, need to figure out last ID thing
         } 
         try {

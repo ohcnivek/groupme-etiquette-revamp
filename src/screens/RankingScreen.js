@@ -36,7 +36,7 @@ function RankingScreen(props) {
     if (!loading) {
         return (
             <div>
-                    <h1>Rankings (based on messages sent to likes recieved) </h1>
+                    <h1>Rankings (based on ratio of messages sent to likes recieved) </h1>
     
                     <h2>winners: top 15% of those who sent messages </h2>
                     {topANDbottomRanking[0].map((pair, index) => { 
@@ -55,7 +55,7 @@ function RankingScreen(props) {
     } else {
         return (
             <div>
-                <LoadingScreen></LoadingScreen>
+                <LoadingScreen group = {false} ranking = {true}></LoadingScreen>
             </div>
         );
     }
