@@ -1,7 +1,7 @@
-import './App.css';
-import HomeScreen from "./screens/HomeScreen"
-import GroupScreen from './screens/GroupScreen';
-import RankingScreen from './screens/RankingScreen';
+import "./App.css";
+import HomeScreen from "./screens/HomeScreen";
+import GroupScreen from "./screens/GroupScreen";
+import RankingScreen from "./screens/RankingScreen";
 
 import {
   BrowserRouter,
@@ -9,19 +9,20 @@ import {
   Route,
 } from "react-router-dom";
 
-
 function App() {
   return (
     <div className="App">
       {/* <header className="App-header"> */}
-        <BrowserRouter>
-        <Routes> 
-            <Route path="/" element={<HomeScreen/>}/>
-            <Route path="/GroupScreen" element={<GroupScreen/>}/>
-            <Route path="/GroupScreen/RankingScreen" element={<RankingScreen/>}/>
-
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomeScreen />} />
+          <Route path="/GroupScreen" element={<GroupScreen />} />
+          <Route
+            path="/GroupScreen/RankingScreen"
+            element={<RankingScreen />}
+          />
         </Routes>
-        </BrowserRouter>
+      </BrowserRouter>
       {/* </header> */}
     </div>
   );
