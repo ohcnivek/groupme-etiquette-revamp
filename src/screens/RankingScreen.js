@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { main } from "../logic";
 import LoadingScreen from "./LoadingScreen";
 
-function RankingScreen(props) {
+export const RankingScreen = (props) => {
   const location = useLocation();
   let [topANDbottomRanking, settopANDbottomRanking] = useState([[[]], [[]]]);
   let [loading, setLoading] = useState(true);
@@ -16,7 +16,6 @@ function RankingScreen(props) {
         setLoading(false);
       });
     }
-
     async function fetchRankings() {
       try {
         getRankings();
@@ -25,38 +24,49 @@ function RankingScreen(props) {
         console.error(err);
       }
     }
-
     fetchRankings();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [[[]], [[]]]);
 
   if (!loading) {
     return (
-      <div>
-        <h1>Rankings (based on ratio of messages sent to likes recieved) </h1>
-
-        <h2>winners: top 15% of those who sent messages </h2>
-        {topANDbottomRanking[0].map((pair, index) => {
-          return (
-            <h3>
-              {" "}
-              {index + 1}. {pair[1]} : ratio of{" "}
-              {Math.round(pair[0] * 100) / 100}{" "}
-            </h3>
-          );
-        })}
-
-        <h2>not winners: bottom 15% of those who sent messages</h2>
-        {topANDbottomRanking[1].map((pair, index) => {
-          return (
-            <h3>
-              {" "}
-              {index + 1}. {pair[1]} : ratio of{" "}
-              {Math.round(pair[0] * 100) / 100}{" "}
-            </h3>
-          );
-        })}
+      <div className="flex flex-col items-center">
+        <div className="flex flex-col space-y-4">
+          <p className="font-bold text-3xl">The Verdict.</p>
+          <p className="italic text-sm"> for those who sent messages :)</p>
+          <div>
+            <p className="text-xl font-semibold">🎉 Winners: top 15% 🎊🍾</p>
+            <div>
+              {topANDbottomRanking[0].map((pair, index) => {
+                return (
+                  <div className="flex flex-row">
+                    <p className="font-bold pr-2">{index + 1}. </p>
+                    <p>
+                      {pair[1]} : ratio of {Math.round(pair[0] * 100) / 100}{" "}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div>
+            <p className="text-xl font-semibold">
+              😪 Not Winners: bottom 15% 🫤
+            </p>
+            <div>
+              {topANDbottomRanking[1].map((pair, index) => {
+                return (
+                  <div className="flex flex-row">
+                    <p className="font-bold pr-2">{index + 1}. </p>
+                    <p>
+                      {pair[1]} : ratio of {Math.round(pair[0] * 100) / 100}{" "}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </div>
     );
   } else {
@@ -66,6 +76,6 @@ function RankingScreen(props) {
       </div>
     );
   }
-}
+};
 
 export default RankingScreen;

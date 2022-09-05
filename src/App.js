@@ -1,18 +1,11 @@
-import "./App.css";
 import HomeScreen from "./screens/HomeScreen";
 import GroupScreen from "./screens/GroupScreen";
 import RankingScreen from "./screens/RankingScreen";
-
-import {
-  BrowserRouter,
-  Routes, //replaces "Switch" used till v5
-  Route,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      {/* <header className="App-header"> */}
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomeScreen />} />
@@ -23,7 +16,6 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
-      {/* </header> */}
     </div>
   );
 }

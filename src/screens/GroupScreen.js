@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "@mui/material/";
 import { useNavigate, useLocation } from "react-router-dom";
 import { listGroups } from "../logic";
 import LoadingScreen from "./LoadingScreen";
 
-function GroupScreen(props) {
+export const GroupScreen = (props) => {
   let navigate = useNavigate();
   const location = useLocation();
-
   let [groups, setGroups] = useState([]);
   let [loading, setLoading] = useState(true);
   const INPUT_API_KEY = location.state.apiKey;
@@ -19,51 +17,48 @@ function GroupScreen(props) {
         setLoading(false);
       });
     }
-
     async function fetchGroups() {
       try {
         getGroups();
       } catch (err) {
-        console.log("err-");
         console.error(err);
       }
     }
-
     fetchGroups();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(groups);
-
   if (!loading) {
     return (
-      <div>
-        <h1> Chooose the group to analyze! </h1>
-        <h5> (for right now the more the messages in the gc, the better) </h5>
-
-        {groups.map((group, index) => {
-          return (
-            <Button
-              onClick={() =>
-                navigate("/GroupScreen/RankingScreen", {
-                  state: {
-                    groupObject: group,
-                    userApiKey: location.state.apiKey,
-                  },
-                })
-              }
-            >
-              {" "}
-              {index}. {group.name}{" "}
-            </Button>
-          );
-        })}
+      <div className="flex flex-col items-center">
+        <p className="text-3xl font-bold pt-2">Chooose the group to analyze!</p>
+        <p className="italic pb-3">
+          (for right now, we only sugggest the most recent groupmes.)
+        </p>
+        <div className="flex flex-col items-start space-y-3">
+          {groups.map((group, index) => {
+            return (
+              <button
+                className="text-xl text-blue-400"
+                onClick={() =>
+                  navigate("/GroupScreen/RankingScreen", {
+                    state: {
+                      groupObject: group,
+                      userApiKey: location.state.apiKey,
+                    },
+                  })
+                }
+              >
+                {index}. {group.name}
+              </button>
+            );
+          })}
+        </div>
       </div>
     );
   } else {
     return <LoadingScreen group={true} ranking={false}></LoadingScreen>;
   }
-}
+};
 
 export default GroupScreen;
