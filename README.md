@@ -1,9 +1,11 @@
 # Groupme Etiquette (Revamped)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) & hosted on Vercel. 
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) & is hosted on Vercel. 
 
 # Context
 Have you ever wondered who sends the most popular/ controversial? messages in your friend group's massive groupme? If so, look no further! 
+
+Find out [here](https://groupme-etiquette-revamp.vercel.app/)!
 
 # To Run Locally
 1. Clone the repository
